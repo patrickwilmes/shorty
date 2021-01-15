@@ -14,10 +14,12 @@ var (
 
 type Repository interface {
 	Create(url models.ShortUrl) error
+	Delete(token models.Token, id string) error
 }
 
 type Service interface {
 	Create(targetUrl string, token models.Token) (string, error)
+	Delete(token models.Token, id string) error
 }
 
 type surlService struct {
@@ -52,4 +54,7 @@ func (su surlService) Create(targeturl string, token models.Token) (string, erro
 	}
 	err := su.SUrlRepository.Create(shortUrl)
 	return shortUrl.ID, err
+}
+func (su surlService) Delete(token models.Token, id string) error {
+	return su.SUrlRepository.Delete(token, id)
 }

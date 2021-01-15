@@ -5,3 +5,6 @@ Content-Type: application/json
   "TargetUrl": "https://google.com",
   "Token": "0eb34fad-ea88-4840-a084-f2d210400527"
 }
+
+###
+DELETE http://localhost:8080/url/cv6VxVduxjTiFIFKMqt4VWjtp2o=/0eb34fad-ea88-4840-a084-f2d210400527
