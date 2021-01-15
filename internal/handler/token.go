@@ -16,8 +16,9 @@ type tokenContext struct {
 }
 
 func InitializeTokenHandlers(router *mux.Router, client *mongo.Client) {
-	repo := db.TokenRepository{Client: client}
-	handlerContext := tokenContext{client: client, service: tokens.New(repo)}
+	shortUrlRepo := db.ShortUrlRepository{Client: client}
+	tokenRepo := db.TokenRepository{Client: client}
+	handlerContext := tokenContext{client: client, service: tokens.New(tokenRepo, shortUrlRepo)}
 	router.Methods(methodPost).Path("/token").Name("CreateToken").HandlerFunc(handlerContext.createToken)
 	router.Methods(methodDelete).Path("/token/{token}").Name("DeleteToken").HandlerFunc(handlerContext.deleteToken)
 }

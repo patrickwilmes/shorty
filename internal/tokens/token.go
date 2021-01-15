@@ -3,6 +3,7 @@ package tokens
 import (
 	"errors"
 	"github.com/google/uuid"
+	"github.com/patrickwilmes/shorty/internal/db"
 	"github.com/patrickwilmes/shorty/internal/models"
 )
 
@@ -27,11 +28,13 @@ type Service interface {
 
 type srv struct {
 	repository Repository
+	shortUrlRepository db.ShortUrlRepository
 }
 
-func New(repository Repository) Service {
+func New(repository Repository, urlRepository db.ShortUrlRepository) Service {
 	return &srv{
 		repository: repository,
+		shortUrlRepository: urlRepository,
 	}
 }
 
@@ -49,5 +52,9 @@ func (s srv) Create() (models.Token, error) {
 }
 
 func (s srv) Delete(token models.Token) error {
+	errMappingsDelete := s.shortUrlRepository.DeleteByToken(token)
+	if errMappingsDelete != nil {
+		return errMappingsDelete
+	}
 	return s.repository.Delete(token)
 }

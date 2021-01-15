@@ -47,3 +47,8 @@ func (su ShortUrlRepository) GetByHash(hash string) (models.ShortUrl, error) {
 	err := result.Decode(&model)
 	return model, err
 }
+func (su ShortUrlRepository) DeleteByToken(token models.Token) error {
+	collection := getCollection(su.Client, shortUrlCollection)
+	_, err := collection.DeleteMany(context.Background(), bson.M{"token": token})
+	return err
+}

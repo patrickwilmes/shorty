@@ -15,6 +15,7 @@ var (
 type Repository interface {
 	Create(url models.ShortUrl) error
 	Delete(token models.Token, id string) error
+	DeleteByToken(token models.Token) error
 	GetByToken(token models.Token) (resultingModels []models.ShortUrl, err error)
 	GetByHash(hash string) (models.ShortUrl, error)
 }
