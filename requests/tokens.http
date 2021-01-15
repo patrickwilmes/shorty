@@ -1,1 +1,5 @@
 POST http://localhost:8080/token
+
+###
+
+DELETE http://localhost:8080/token/224800e4-2172-49bb-8cbc-242da68fd65d

@@ -31,12 +31,12 @@ func (tr TokenRepository) Create(token models.Token) error {
 }
 
 func (tr TokenRepository) Delete(token models.Token) error {
-	_, err := tr.getCollection().DeleteOne(context.Background(), bson.M{"Token": token})
+	_, err := tr.getCollection().DeleteOne(context.Background(), bson.M{"token": token})
 	return err
 }
 
 func (tr TokenRepository) Exists(token models.Token) (bool, error) {
-	result := tr.getCollection().FindOne(context.Background(), bson.M{"Token": token})
+	result := tr.getCollection().FindOne(context.Background(), bson.M{"token": token})
 	var tokenDto TokenDto
 	err := result.Decode(&tokenDto)
 	return err == nil, nil // todo - this error could be removed here as FindOne is only returning a result and no error
