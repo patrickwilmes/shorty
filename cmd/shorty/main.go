@@ -48,6 +48,7 @@ func initializeDatabase() (*mongo.Client, context.Context) {
 func configureRouter(client *mongo.Client) *mux.Router {
 	router := mux.NewRouter()
 	handler.InitializeTokenHandlers(router, client)
+	handler.InitializeShortUrlHandlers(router, client)
 	return router
 }
 

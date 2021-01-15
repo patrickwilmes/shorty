@@ -1,0 +1,7 @@
+POST http://localhost:8080/url
+Content-Type: application/json
+
+{
+  "TargetUrl": "https://google.com",
+  "Token": "0eb34fad-ea88-4840-a084-f2d210400527"
+}

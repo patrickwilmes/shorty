@@ -10,7 +10,6 @@ import (
 	"net/http"
 )
 
-
 type tokenContext struct {
 	client *mongo.Client
 	service tokens.Service
