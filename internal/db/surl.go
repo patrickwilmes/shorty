@@ -40,3 +40,10 @@ func (su ShortUrlRepository) GetByToken(token models.Token) (resultingModels []m
 	}
 	return
 }
+func (su ShortUrlRepository) GetByHash(hash string) (models.ShortUrl, error) {
+	collection := getCollection(su.Client, shortUrlCollection)
+	result := collection.FindOne(context.Background(), bson.M{"hash": hash})
+	var model models.ShortUrl
+	err := result.Decode(&model)
+	return model, err
+}

@@ -49,6 +49,7 @@ func configureRouter(client *mongo.Client) *mux.Router {
 	router := mux.NewRouter()
 	handler.InitializeTokenHandlers(router, client)
 	handler.InitializeShortUrlHandlers(router, client)
+	handler.InitializeRedirectHandlers(router, client)
 	return router
 }
 
