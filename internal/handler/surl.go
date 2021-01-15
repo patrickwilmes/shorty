@@ -25,6 +25,7 @@ func InitializeShortUrlHandlers(router *mux.Router, client *mongo.Client) {
 	handlerContext := surlContext{client: client, service: surl.New(repo)}
 	router.Methods(methodPost).Path("/url").Name("CreateShortUrl").HandlerFunc(handlerContext.createShortUrl)
 	router.Methods(methodDelete).Path("/url/{shortUrlId}/{token}").Name("DeleteShortUrl").HandlerFunc(handlerContext.deleteShortUrl)
+	router.Methods(methodGet).Path("/url/{token}").Name("GetMappingsByToken").HandlerFunc(handlerContext.getMappingsByToken)
 }
 
 // todo - implement proper error handling with some kind of problem json
@@ -61,4 +62,18 @@ func (sc surlContext) deleteShortUrl(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+}
+
+func (sc surlContext) getMappingsByToken(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	token := models.Token(vars["token"])
+	mappings, err := sc.service.GetByToken(token)
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(mappings)
 }
